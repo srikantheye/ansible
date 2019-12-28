@@ -1,0 +1,7 @@
+---
+# tasks file for role1
+- name: install tomcat9
+  become: yes
+  apt:
+    name: "{{ dep_pkg }}"
+    state: present

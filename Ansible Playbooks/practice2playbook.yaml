@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  vars_files: 
+    - var.yaml
+  tasks:
+    - name: install multiple packages
+      become: yes
+      apt:
+        name: "{{ dep_pkg }}"

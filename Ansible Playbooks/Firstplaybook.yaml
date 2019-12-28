@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  tasks:
+  - name: install tomcat9
+    become: yes
+    apt:
+      name: tomcat9
+      state: present
+         

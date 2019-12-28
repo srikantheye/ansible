@@ -1,0 +1,44 @@
+# ---
+# - hosts: all
+#   become: true
+#   become_method: sudo
+#   tasks:
+#   - name: install tomcat9
+#     become: yes
+#     apt:
+#       name: tomcat9
+#       state: present
+
+
+
+
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  tasks:
+  - name: install tomcat9
+    become: yes
+    apt:
+      name: tomcat9
+      state: present
+
+  - name: install maven
+    become: yes
+    apt:
+      name: maven
+      state: present
+
+  - name: clone git 
+    become: yes
+    git:
+      repo: https://github.com/shashirajraja/onlinebookstore.git
+      dest: /root/git
+      version: gh-pages
+
+  # - name: Clone git code
+  #   shell: cd /home/srikanth/Git/ && git clone -b gh-pages https://github.com/shashirajraja/onlinebookstore.git
+
+  - name: build with maven 
+    shell: cd /root/git/ && mvn clean package
+    

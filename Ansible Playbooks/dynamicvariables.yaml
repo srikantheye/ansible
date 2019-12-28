@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  vars_prompt: 
+    - name: pkg1
+      prompt: "enter pkg1 name"
+      private: no
+    - name: pkg2
+      prompt: "enter pkg2 name"
+      private: no
+    - name: pkg3
+      prompt: "enter pkg3 name"
+      private: no     
+  tasks:
+    - name: install tomcat9
+      become: yes
+      apt:
+        name: "{{ pkg1 }}"
+        state: present
+    - name: install maven
+      become: yes
+      apt:
+        name: "{{ pkg2 }}"
+        state: present
+    - name: install apache2
+      become: yes
+      apt:
+        name: "{{ pkg3 }}"
+        state: present    

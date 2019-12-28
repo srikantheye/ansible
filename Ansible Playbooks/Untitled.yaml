@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  tasks:    
+  - name: clone git 
+    become: yes
+    git:
+      repo: https://github.com/shashirajraja/onlinebookstore.git
+      dest: /home/srikanth/Git
+      version: gh-pages
+  - name: build with maven 
+    shell: cd /home/srikanth/Git && mvn clean package
+  - name: Rename
+    shell: cd /home/srikanth/Git/target/ && mv *.war onlinebookstore.war
+  - name: copy
+    shell: sudo cp /home/srikanth/Git/target/*.war /home/srikanth/docker/
+  - name: build docker image
+    shell: cd /home/srikanth/docker/ && sudo docker build -t onlinebookstore .
+  - name: run docker image
+    shell: sudo docker run -d -p 8090:8080 onlinebookstore
